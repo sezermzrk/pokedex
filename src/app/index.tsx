@@ -8,12 +8,23 @@ interface Pokemon {
   url : string;
   imageBack : string;
   types : PokemonType[];
+  abilities: string[];
 }
 interface PokemonType {
   type: {
     name: string;
     url: string;
   };
+
+}
+
+interface PokemonAbility {
+  ability: {
+    name: string;
+    url: string;
+  };
+  is_hidden: boolean;
+  slot: number;
 }
 
 const colorsByType: { [key: string]: string } = {
@@ -57,6 +68,9 @@ export default function Index() {
             image: detailedData.sprites.front_default,
             imageBack: detailedData.sprites.back_default,
             types : detailedData.types,
+            abilities : detailedData.abilities.map(
+                      (item: PokemonAbility) => item.ability.name),
+           
           };
         })
       );
@@ -75,10 +89,19 @@ export default function Index() {
         <View key={pokemon.name} >
           <Text style={styles.name}>{pokemon.name}</Text>
           <Text style={styles.type}>{pokemon.types[0].type.name} </Text>
+          
           <View style={{ flexDirection: "row" }}>
             <Image source={{ uri: pokemon.image }} style={{ width: 150, height: 150 }} />
             <Image source={{ uri: pokemon.imageBack }} style={{ width: 150, height: 150 }} />
           </View>
+            <Text style={styles.ability}>Abilities:</Text>
+            {pokemon.abilities.map((ability) => (
+            <Text key={ability} style={styles.ability}>
+            {ability}
+            </Text>
+  ))}
+    
+          
         </View>
         </Link>
       ))}
@@ -97,6 +120,12 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     color: "gray",
+    textAlign: "center",
+  },
+  ability: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#265747",
     textAlign: "center",
   }
 });
