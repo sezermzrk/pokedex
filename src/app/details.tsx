@@ -7,6 +7,8 @@ export default function Details() {
 
   const params = useLocalSearchParams();
   const [color, setColor] = useState('#FFFFFF');
+
+  const pokemonName = (params.name as string).toUpperCase();
   console.log("Params in RootLayout:", params); // Log the params to see their structure
 
   useEffect(() => {
@@ -28,10 +30,10 @@ export default function Details() {
 
   return (
     <>
-    <Stack.Screen options={{ title: params.name as string}} />
+    <Stack.Screen options={{ title: pokemonName}} />
     <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: "center", alignItems: "center" }}>
     <Image source={{ uri: params.image as string }} style={{ width: 150, height: 150 }} />
-      <Text style={{ color }}>{params.name}</Text>
+      <Text style={{ color }}>{pokemonName}</Text>
     </ScrollView>
     </>
   );
